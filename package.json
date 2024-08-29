@@ -1,0 +1,25 @@
+{
+  "name": "ionicappbackend",
+  "version": "1.0.0",
+  "description": "Backend for react-native invoice building app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p .",
+    "dev": "nodemon src/index.ts",
+    "serve": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.6.0",
+    "node": "^22.7.0",
+    "nodemon": "^3.1.4",
+    "zod": "^3.23.8"
+  }
+}
