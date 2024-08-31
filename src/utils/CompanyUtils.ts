@@ -2,7 +2,7 @@ import {z} from 'zod';
 import { CompanyInterface, companyModel } from '../db/schemas/CompanySchema';
 import bcrypt from 'bcrypt';
 
-const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
+const SALT_ROUNDS = 10;
 
 
 // Zod Schema to validate user data
