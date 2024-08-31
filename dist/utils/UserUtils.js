@@ -16,7 +16,7 @@ exports.checkUser = exports.createUser = void 0;
 const zod_1 = require("zod");
 const UserSchema_1 = require("../db/schemas/UserSchema");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
+const SALT_ROUNDS = 10;
 // Zod Schema to validate user data
 const userZod = zod_1.z.object({
     name: zod_1.z.string({ message: 'Name is required' }),

@@ -16,7 +16,7 @@ exports.getMembers = exports.addMember = exports.getCompanyDetails = exports.che
 const zod_1 = require("zod");
 const CompanySchema_1 = require("../db/schemas/CompanySchema");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
+const SALT_ROUNDS = 10;
 // Zod Schema to validate user data
 const companyZod = zod_1.z.object({
     name: zod_1.z.string({ message: 'Name is required' }),
