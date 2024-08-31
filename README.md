@@ -1,6 +1,45 @@
 Ionic Backend
 // written by ChatGPT
 
+Important Schemas:
+const companySchema = new mongoose.Schema({
+  name: {type: String, required: true},
+  email: {type: String, required: true, unique: true},
+  address: {type: String, required: true},
+  owner: {type: String, required: true},
+  password: {type: String, required: true},
+  members: {type: [String], default: []},
+});
+
+const userSchema = new mongoose.Schema({
+  name: {type: String, required: true},
+  email: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
+});
+
+
+const InvoiceSchema = new mongoose.Schema({
+  companyDetails: {
+    name: {type: String, required: true},
+    email: {type: String, required: true},
+    address: {type: String, required: true},
+  },
+  clientCompanyDetails: {
+    name: {type: String, required: true},
+    email: {type: String, required: true},
+    address: {type: String, required: true},
+  },
+  items: {
+    type: [{description: String, price: String}],
+    required: true
+  },
+  taxRate: {
+    type: String,
+    required: true
+  }
+});
+
+
 Overview
 
 This project provides an authentication system for user and company management. It allows users to register, log in, and manage companies through a set of API endpoints. Below are the details of each endpoint and how to use them.
@@ -50,6 +89,44 @@ API Endpoints
             Error: { "error": "message" }
 
         The user's email (from the JWT) will be added to the company's members array on succesfull join.
+
+    Create Invoice
+        Endpoint: /company/create-invoice
+        Method: POST
+        Headers:
+            Authorization: <JWT of owner only>
+        Request Body:
+            {   companyEmail: "yourcompanyemail@gmail.com" // email of the company creating the invoice, other details will be fetched from the database,
+                "clientCompanyDetails": {
+                    "name": "Client Company Name",
+                    "email": "clientemail@gmail.com",
+                }
+                "items": [
+                    { "description": "Item 1", "price": "100" //string },
+                    { "description": "Item 2", "price": "200" //string }
+                ],
+                "taxRate": "10" //string
+            }
+
+        Response:
+            Success: { "success": true }
+            Error: { "error": "message" }
+
+        The invoice will be created and saved in the database.
+
+    Get Invoices
+        Endpoint: /company/get-invoices
+        Method: POST
+        Headers:
+            Authorization: <JWT of owner or member>
+        Request Body:
+            { "companyEmail": "company email"}
+
+        Response:
+            Success: { "success": true, "invoices": [invoice1, invoice2, ...] }
+            Error: { "error": "message" }
+
+        The invoices for the company will be fetched from the database and returned in the response as an array.
 
 Storing JWT Locally
 

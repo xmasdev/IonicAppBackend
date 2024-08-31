@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import { AuthRouter } from './routes/AuthRouter';
 import { CompanyAuthRouter } from './routes/CompanyAuthRouter';
+import { CompanyRouter } from './routes/CompanyRouter';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', AuthRouter);
 app.use('/auth-company', CompanyAuthRouter);
+app.use('/company', CompanyRouter);
 
 app.listen(PORT as number, "0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${PORT}`)

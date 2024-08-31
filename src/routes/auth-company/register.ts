@@ -9,7 +9,7 @@ companySignupRouter.post('/register', AuthMiddleware, async (req, res) => {
   if(!name || !email || !password || !address){
     return res.status(400).json({error: 'All fields are required'});
   }
-  const company = {name, email, password, address, owner: req.body.user.email, invoices: [], members: []};
+  const company = {name, email, password, address, owner: req.body.user.email, members: []};
   try {
     const response = await createCompany(company);
     if (response.error) {

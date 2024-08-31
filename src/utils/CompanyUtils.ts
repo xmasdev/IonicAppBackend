@@ -12,7 +12,6 @@ const companyZod = z.object({
   password: z.string().min(6, {message: 'Password must be at least 6 characters long'}),
   address: z.string({message: 'Address is required'}),
   owner: z.string({message: 'Owner is required'}).email({message: 'Invalid email address'}),
-  invoices: z.any().array().optional(),
   members: z.string().array(),
 })
 
@@ -45,6 +44,18 @@ export const checkCompany = async (email: string, password: string) => {
   }
 }
 
+export const getCompanyDetails = async (email: string) => {
+  try {
+    const company = await companyModel.find({email});
+    if(!company){
+      return {error: 'Company not found'};
+    }
+    return {success: true, company: company[0]};
+  } catch (error) {
+    return {error: error};
+  }
+}
+
 export const addMember = async (companyEmail: string, memberEmail: string) => {
   try {
     const company = await companyModel.find({email: companyEmail});
@@ -58,6 +69,21 @@ export const addMember = async (companyEmail: string, memberEmail: string) => {
     members.push(memberEmail);
     await companyModel.updateOne({email: companyEmail}, {members});
     return {success: true};
+  } catch (error) {
+    return {error: error};
+  }
+}
+
+export const getMembers = async (memberEmail: string, companyEmail: string) => {
+  try {
+    const company = await companyModel.find({email: companyEmail});
+    if(!company){
+      return {error: 'Company not found'};
+    }
+    if (company[0].owner !== memberEmail && !company[0].members.includes(memberEmail)){
+      return {error: 'Unauthorized'};
+    }
+    return {success: true, members: company[0].members};
   } catch (error) {
     return {error: error};
   }
